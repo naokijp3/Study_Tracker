@@ -1,0 +1,42 @@
+{% extends "study/base.html" %}
+
+{% block title %}Study Dashboard{% endblock %}
+
+{% block content %}
+<h1>Study Dashboard</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <img src="{{ graph }}" class="img-fluid" alt="Study Progress Graph">
+    </div>
+</div>
+
+<h2>Study Records</h2>
+{% for category, data in category_summary.items %}
+    <div class="card mb-4">
+        <div class="card-header">{{ category }}</div>
+        <div class="card-body">
+            <p>合計勉強時間: {{ data.total_minutes }} 分</p>
+            <ul>
+                {% for log in data.logs %}
+                    <li>{{ log.start_time }} - {{ log.end_time }} | {{ log.duration_in_minutes }} 分</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endfor %}
+
+<h2>Goals Summary</h2>
+{% for category, data in goal_summary.items %}
+    <div class="card mb-4">
+        <div class="card-header">{{ category }}</div>
+        <div class="card-body">
+            <p>目標時間: {{ data.target_minutes }} 分</p>
+            <p>達成済み時間: {{ data.achieved_minutes }} 分</p>
+            <p>残り時間: {{ data.remaining_minutes }} 分</p>
+        </div>
+    </div>
+{% endfor %}
+
+
+{% endblock %}

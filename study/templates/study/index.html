@@ -1,0 +1,31 @@
+{% extends "study/base.html" %}
+
+{% block title %}Study Tracker{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">📚 Study Tracker</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        {% if studying %}
+            <h4 class="text-success">📚 Currently Studying: {{ current_study_log.category }}</h4>
+        {% else %}
+            <h4 class="text-secondary">📘 Not Studying (勉強中でない)</h4>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+            </div>
+
+            {% if studying %}
+                <button type="submit" name="stop_study" class="btn btn-danger">Stop Studying</button>
+            {% else %}
+                <button type="submit" name="start_study" class="btn btn-primary">Start Studying</button>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

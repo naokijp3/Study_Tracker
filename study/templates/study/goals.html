@@ -1,0 +1,49 @@
+{% extends "study/base.html" %}
+
+{% block title %}Goals{% endblock %}
+
+{% block content %}
+<h1>Goals</h1>
+
+<div class="card mb-4">
+    <div class="card-header">Set or Update Study Goal</div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                {{ goal_form.category.label_tag }}
+                {{ goal_form.category }}
+                {% if goal_form.category.errors %}
+                    <div class="alert alert-danger">
+                        {{ goal_form.category.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group mb-3">
+                {{ goal_form.target_minutes.label_tag }}
+                {{ goal_form.target_minutes }}
+                {% if goal_form.target_minutes.errors %}
+                    <div class="alert alert-danger">
+                        {{ goal_form.target_minutes.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <button type="submit" name="set_goal" class="btn btn-success">Set or Update Goal</button>
+        </form>
+    </div>
+</div>
+
+<h2>Existing Goals</h2>
+{% if study_goals %}
+    {% for goal in study_goals %}
+        <div class="card mb-4">
+            <div class="card-header">{{ goal.category }}</div>
+            <div class="card-body">
+                <p>目標時間: {{ goal.target_minutes }} 分</p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No goals have been set.</p>
+{% endif %}
+{% endblock %}

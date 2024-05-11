@@ -1,0 +1,16 @@
+{% extends "study/base.html" %}
+
+{% block title %}Export Data{% endblock %}
+
+{% block content %}
+<h1>Export Data</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h2>Download Your Data</h2>
+        <p>Use the links below to download your Study Logs and Goals in CSV format.</p>
+        <a href="{% url 'export_study_logs_csv' %}" class="btn btn-primary mb-2">Export Study Logs</a>
+        <a href="{% url 'export_study_goals_csv' %}" class="btn btn-primary mb-2">Export Study Goals</a>
+    </div>
+</div>
+{% endblock %}
