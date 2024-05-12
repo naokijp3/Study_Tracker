@@ -1,5 +1,6 @@
 from pathlib import Path
 from .settings_local import *
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,6 +27,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 ROOT_URLCONF = 'english_study_tracker.urls'
 
@@ -81,9 +85,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "study/static",
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR / 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 LOGIN_URL = 'user_login'
+
+ALLOWED_HOSTS = ['study-tracker.onrender.com']
