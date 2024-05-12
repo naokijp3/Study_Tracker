@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://study-tracker-9vfh.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['study-tracker-9vfh.onrender.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
