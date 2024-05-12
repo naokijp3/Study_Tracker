@@ -1,6 +1,6 @@
 # study/models.py
-
 from django.db import models
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -9,6 +9,7 @@ class Category(models.Model):
         return self.name
 
 class StudyLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(null=True, blank=True)
@@ -23,8 +24,9 @@ class StudyLog(models.Model):
         return f'{self.category} - {self.start_time} to {self.end_time}'
 
 class StudyGoal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='study_goals')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    target_minutes = models.FloatField()
+    target_minutes = models.IntegerField()
 
     def __str__(self):
         return f'{self.category} - {self.target_minutes} 分'

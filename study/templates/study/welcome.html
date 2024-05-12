@@ -1,0 +1,13 @@
+<!-- templates/study/welcome.html -->
+{% extends 'study/base.html' %}
+
+{% block title %}Welcome to English Study Tracker{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Welcome to English Study Tracker</h1>
+    <p>Please sign up or log in to start tracking your studying progress.</p>
+    <a href="{% url 'user_login' %}" class="btn btn-primary">Login</a>
+    <a href="{% url 'signup' %}" class="btn btn-secondary">Sign Up</a>
+</div>
+{% endblock %}

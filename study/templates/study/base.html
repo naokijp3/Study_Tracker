@@ -1,3 +1,4 @@
+<!-- templates/study/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +30,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'export_data' %}">Export Data</a>
                     </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user_login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
