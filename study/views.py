@@ -1,8 +1,8 @@
-# views.py
 import csv
 import matplotlib.pyplot as plt
 import io
 import base64
+import os
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -13,15 +13,25 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 import matplotlib
-matplotlib.use('Agg') 
+matplotlib.use('Agg')
 
+# フォントの設定を環境に応じて調整
+if os.name == 'nt':
+    # Windows環境の場合
+    font_path = r"C:\Users\naoki\AppData\Local\Microsoft\Windows\Fonts\NotoSansCJKjp-Regular.otf"
+else:
+    # Linux環境の場合 (RenderはLinuxを使用)
+    font_path = '/usr/share/fonts/opentype/noto/NotoSansCJKjp-Regular.otf'
 
-# フォントパスを正確なファイル名で指定
-font_path = r"C:\Users\naoki\AppData\Local\Microsoft\Windows\Fonts\NotoSansCJKjp-Regular.otf"  # フォントファイルへの正確なパスを指定
-font_prop = font_manager.FontProperties(fname=font_path)
+# フォントが存在するか確認し、存在しない場合はデフォルトフォントを使用
+if os.path.exists(font_path):
+    font_prop = font_manager.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = font_prop.get_name()
+else:
+    # フォントファイルが見つからない場合は、matplotlibのデフォルトフォントを使用
+    plt.rcParams['font.family'] = 'DejaVu Sans'
+    print("Using default font because the specified font was not found.")
 
-# matplotlibのデフォルトフォントを日本語フォントに設定
-plt.rcParams['font.family'] = font_prop.get_name()
 plt.rcParams['axes.unicode_minus'] = False
 
 def index(request):
@@ -133,11 +143,11 @@ def dashboard(request):
     ax.bar(index, target_minutes, bar_width, label='目標 (分)', color='grey')
     ax.bar([i + bar_width for i in index], achieved_minutes, bar_width, label='達成 (分)', color='blue')
 
-    ax.set_xlabel('カテゴリー', fontproperties=font_prop)
-    ax.set_ylabel('分', fontproperties=font_prop)
-    ax.set_title('勉強進捗', fontproperties=font_prop)
+    ax.set_xlabel('カテゴリー')
+    ax.set_ylabel('分')
+    ax.set_title('勉強進捗')
     ax.set_xticks([i + bar_width / 2 for i in index])
-    ax.set_xticklabels(categories, rotation=45, fontproperties=font_prop)
+    ax.set_xticklabels(categories, rotation=45)
     ax.legend()
 
     plt.tight_layout()
